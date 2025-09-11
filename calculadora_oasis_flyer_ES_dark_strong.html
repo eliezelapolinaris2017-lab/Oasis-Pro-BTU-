@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capacidad de aire acondicionado – Oasis</title>
+<meta name="description" content="Calculadora simple de capacidad de aire acondicionado para Puerto Rico (≈70 BTU/ft²).">
+<style>
+
+  :root{--brand:#0b7cff;--accent:#ffb300;--text:#1e2430;--muted:#657187;--bg:#f7f9fc;--card:#ffffff;--border:#e6eaf2}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+  header{background:#fff;border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#111,#2d3bff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;letter-spacing:.5px}
+  .brandname{font-weight:900;color:var(--brand);line-height:1}
+  .sub{font-size:12px;color:var(--muted)}
+  .container{max-width:860px;margin:18px auto;padding:0 16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 8px 28px rgba(20,24,40,.06)}
+  h1{font-size:22px;margin:8px 0 14px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:#fff}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.grid.three{grid-template-columns:repeat(3,1fr)}}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+  .btn{border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer}
+  .btn.primary{background:var(--accent);color:#1b1b1b}
+  .btn.ghost{background:#fff;border:1px solid var(--border)}
+  .note{font-size:12px;color:var(--muted)}
+  .checkbox{display:flex;align-items:center;gap:8px;margin-top:12px}
+  .results{margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
+  .res-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px}
+  .res-title{font-weight:800;margin-bottom:6px}
+  .badge{display:inline-block;background:#eef4ff;color:#2b5cff;border:1px solid #dfe8ff;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:700}
+  footer{margin:24px 0;color:var(--muted);text-align:center;font-size:12px}
+  .lang{cursor:pointer;color:var(--muted);font-size:14px}
+  .contact{margin-top:6px;font-size:12px;color:var(--muted)}
+
+
+
+  /* v1.9: keep original design; use inline-flex label so text stays beside the box */
+  .checkbox{display:block;margin-top:12px}
+  .checkbox .accept{display:inline-flex;align-items:center;gap:8px}
+  .checkbox .accept input{margin:0}
+  .checkbox .accept span{display:inline;white-space:normal;line-height:1.35;max-width:calc(100% - 34px)}
+
+
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:#000;color:#fff}
+  .card{background:#111;border:1px solid #333;color:#fff}
+  input{background:#000;color:#fff;border:1px solid #444}
+  .btn.primary{background:#ffb300;color:#000}
+  .btn.ghost{background:#222;border:1px solid #555;color:#fff}
+  .note,.sub,.contact{color:#bbb}
+  .res-box{background:#000;border:1px solid #444;color:#fff}
+  header{background:#000;border-bottom:1px solid #333;color:#fff}
+  .brandname{color:#fff}
+  .logo{background:linear-gradient(135deg,#000,#222);color:#fff}
+
+
+  body{background:#000;color:#fff}
+  .card{background:#111;border:1px solid #333;color:#fff}
+  input{background:#000;color:#fff;border:1px solid #666}
+  label{color:#fff}
+  .btn.primary{background:#ffb300;color:#000;font-weight:800}
+  .btn.ghost{background:#222;border:1px solid #666;color:#fff}
+  .note,.sub,.contact{color:#ddd}
+  .res-box{background:#000;border:1px solid #666;color:#fff}
+  header{background:#000;border-bottom:1px solid #333;color:#fff}
+  .brandname{color:#fff;font-weight:900}
+  h1{color:#fff}
+  .res-title{color:#fff}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">OA</div>
+    <div>
+      <div class="brandname">Oasis Air Cleaner Services LLC</div>
+      <div class="sub">787‑664‑3079 · oasisservicespr.com</div>
+    </div>
+  </div>
+  <div class="lang" id="lang">ESPAÑOL</div>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h1 id="title">Capacidad de aire acondicionado</h1>
+    <div class="badge" id="badgePR">Puerto Rico – cálido y húmedo (≈70 BTU/ft²)</div>
+
+    <div class="grid three" style="margin-top:12px;">
+      <div>
+        <label id="lblLen">Largo (en pies)</label>
+        <input type="number" id="len" min="0" step="0.1" placeholder="12">
+      </div>
+      <div>
+        <label id="lblWid">Ancho (en pies)</label>
+        <input type="number" id="wid" min="0" step="0.1" placeholder="12">
+      </div>
+      <div>
+        <label id="lblHei">Altura</label>
+        <input type="number" id="hei" min="0" step="0.1" value="9">
+        <div class="note" id="stdAltura">Standard Altura</div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:8px" id="factorFixed">
+      Method: fixed factor for PR <b>70 BTU/ft²</b>. Altura is shown as a reference.
+    </div>
+
+    <div class="checkbox">
+      <label class="accept" for="accept">
+        <input type="checkbox" id="accept">
+        <span id="terms">Acepto las condiciones de uso.</span>
+      </label>
+    </div>
+
+    <div class="row">
+      <button class="btn primary" id="calcBtn">CALCULAR</button>
+      <button class="btn ghost" id="clearBtn">Limpiar</button>
+    </div>
+
+    <div class="results">
+      <div class="res-box">
+        <div class="res-title" id="resTitle">Resultados</div>
+        <div><b id="calcLabel">BTU/H Calculado:</b> <span id="calc">—</span></div>
+        <div style="margin-top:6px;"><b id="recLabel">BTU/H Recomendado:</b> <span id="rec">—</span></div>
+      </div>
+      <div class="contact" id="contact">
+        ¿Necesitas ayuda eligiendo equipo? Agenda una visita. Servimos todo Puerto Rico.
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:10px" id="disclaimer">
+      Los resultados son aproximados con base en condiciones promedio para Puerto Rico. Contáctanos para una evaluación profesional en sitio.
+    </div>
+  </div>
+</div>
+
+<footer>© <span id="year"></span> Oasis Air Cleaner Services LLC</footer>
+
+<script>
+  const $ = (s)=>document.querySelector(s);
+  const fmt = (n)=> n.toLocaleString('en-US');
+  const caps = [6000,9000,12000,18000,24000,30000,36000,48000,60000,72000];
+  const FACTOR = 70; // fixed
+
+  let es = true; // Versión en español por defecto (toggle deshabilitado)
+  $("#lang").addEventListener("click", ()=>{
+    es = !es;
+    $("#lang").textContent = es ? "ENGLISH" : "ESPAÑOL";
+    $("#title").textContent = es ? "Capacidad de aire acondicionado" : "Capacidad de aire acondicionado";
+    $("#lblLen").textContent = es ? "Largo (en pies)" : "Largo (en pies)";
+    $("#lblWid").textContent = es ? "Ancho (en pies)" : "Ancho (en pies)";
+    $("#lblHei").textContent = es ? "Altura" : "Altura";
+    $("#stdAltura").textContent = es ? "Altura estándar" : "Standard Altura";
+    $("#factorFixed").innerHTML = es
+      ? "Método: factor fijo para PR <b>70 BTU/ft²</b>. La altura se muestra como referencia."
+      : "Method: fixed factor for PR <b>70 BTU/ft²</b>. Altura is shown as a reference.";
+    $("#terms").textContent = es ? "Acepto las condiciones de uso." : "Acepto las condiciones de uso.";
+    $("#calcBtn").textContent = es ? "CALCULAR" : "CALCULAR";
+    $("#clearBtn").textContent = es ? "Limpiar" : "Limpiar";
+    $("#resTitle").textContent = es ? "Resultados" : "Resultados";
+    $("#calcLabel").textContent = es ? "BTU/H Calculado:" : "BTU/H Calculado:";
+    $("#recLabel").textContent = es ? "BTU/H Recomendado:" : "BTU/H Recomendado:";
+    $("#disclaimer").textContent = es
+      ? "Los resultados son aproximados con base en condiciones promedio para Puerto Rico. Contáctanos para una evaluación profesional en sitio."
+      : "Los resultados son aproximados con base en condiciones promedio para Puerto Rico. Contáctanos para una evaluación profesional en sitio.";
+    $("#contact").textContent = es
+      ? "¿Necesitas ayuda eligiendo equipo? Agenda una visita. Servimos todo Puerto Rico."
+      : "¿Necesitas ayuda eligiendo equipo? Agenda una visita. Servimos todo Puerto Rico.";
+    $("#badgePR").textContent = es ? "Puerto Rico – clima cálido y húmedo (≈70 BTU/ft²)" : "Puerto Rico – cálido y húmedo (≈70 BTU/ft²)";
+  });
+
+  function recommend(btu){
+    for(const c of caps){ if(btu <= c) return c; }
+    return caps[caps.length-1];
+  }
+
+  $("#calcBtn").addEventListener("click", ()=>{
+    if(!$("#accept").checked){ alert(es ? "Debes aceptar las condiciones de uso." : "You must accept the conditions of use."); return; }
+    const L = +($("#len").value||0);
+    const W = +($("#wid").value||0);
+    const area = Math.max(0, L*W);
+    const btu = Math.round(area * FACTOR);
+    const rec = recommend(btu);
+    $("#calc").textContent = fmt(btu);
+    $("#rec").textContent = fmt(rec);
+  });
+
+  $("#clearBtn").addEventListener("click", ()=>{
+    ["#len","#wid"].forEach(s=>$(s).value="");
+    $("#hei").value = 9;
+    $("#calc").textContent = "—";
+    $("#rec").textContent = "—";
+    $("#accept").checked = false;
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
